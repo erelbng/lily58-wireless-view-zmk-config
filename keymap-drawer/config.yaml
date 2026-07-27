@@ -1,0 +1,74 @@
+# keymap-drawer settings — styled after the hand-drawn tikz layout
+# in keyboard.org: beige keys, rounded corners, clean sans-serif.
+# Docs: https://github.com/caksoylar/keymap-drawer/blob/main/CONFIGURATION.md
+draw_config:
+  key_w: 58
+  key_h: 54
+  key_rx: 6
+  key_ry: 6
+  inner_pad_w: 3
+  inner_pad_h: 3
+  append_colon_to_layer_header: false
+  dark_mode: auto
+  svg_style: |
+    svg.keymap {
+      font-family: "Fira Sans", "Source Sans 3", "Helvetica Neue", sans-serif;
+      font-size: 13px;
+    }
+    rect.key {
+      fill: #f6f0dd;
+      stroke: #8a8378;
+      stroke-width: 1.2;
+    }
+    rect.held, rect.key.held {
+      fill: #e8d9b8;
+    }
+    rect.trans {
+      fill: #efede6;
+      stroke: #c5c0b4;
+    }
+    text.label { fill: #3a352e; }
+    text.trans { fill: #b3ac9d; }
+    text.hold { fill: #7a7264; font-size: 9px; }
+    text.layer-label {
+      fill: #3a352e;
+      font-size: 20px;
+      font-weight: 600;
+    }
+    .combo rect { fill: #ddd3ba; stroke: #8a8378; }
+
+parse_config:
+  zmk_additional_includes: []
+  raw_binding_map:
+    "&studio_unlock": { t: "🔓", h: "studio" }
+  # Show what the keys type under the German (de) OS layout.
+  zmk_keycode_map:
+    Y: Z
+    Z: Y
+    COMMA: ","
+    DOT: "."
+    LBKT: "ü"
+    SEMI: "ö"
+    SQT: "ä"
+    GRAVE: "^"
+    FSLH: "-"
+    NON_US_BACKSLASH: "<"
+    MINUS: "ß"
+    RBKT: "+"
+    AT: '"'
+    HASH: "§"
+    CARET: "&"
+    AMPS: "/"
+    KP_MULTIPLY: "*"
+    LS(N8): "("
+    LS(N9): ")"
+    TILDE: "°"
+    RPAR: "="
+    RA(N7): "{"
+    RA(N0): "}"
+    RA(N8): "["
+    RA(N9): "]"
+    RA(MINUS): "\\"
+    RA(NON_US_BACKSLASH): "|"
+    RA(RBKT): "~"
+    RA(E): "€"

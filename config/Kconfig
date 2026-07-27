@@ -1,0 +1,38 @@
+# Copyright (c) 2026 ric
+# SPDX-License-Identifier: MIT
+
+config FIREPLACE_WIDGET
+    bool "OLED fireplace status widget (portrait 128x32)"
+    depends on ZMK_DISPLAY
+    select LV_USE_IMG
+    select LV_USE_CANVAS
+    select LV_FONT_MONTSERRAT_12
+    select LV_FONT_MONTSERRAT_16
+
+if FIREPLACE_WIDGET
+
+config FIREPLACE_FRAME_MS
+    int "Milliseconds per fire animation frame"
+    default 150
+
+config FIREPLACE_IDLE_FREEZE
+    bool "Freeze the fire while the keyboard is idle (saves battery)"
+    default y
+
+config FIREPLACE_PAUSE_REMINDER
+    bool "Show a pause reminder after continuous typing"
+    default y
+
+config FIREPLACE_WORK_MINUTES
+    int "Minutes of activity before the pause reminder appears"
+    default 30
+
+config FIREPLACE_BREAK_SECONDS
+    int "How long the pause reminder stays on screen (seconds)"
+    default 60
+
+config FIREPLACE_RESET_IDLE_SECONDS
+    int "A natural break of this many idle seconds resets the work timer"
+    default 60
+
+endif # FIREPLACE_WIDGET

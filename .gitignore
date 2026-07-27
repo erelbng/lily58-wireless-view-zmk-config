@@ -1,0 +1,18 @@
+# West workspace (created by scripts/build.sh, lives in repo root)
+/.west/
+/zmk/
+/zephyr/
+/modules/
+/tools/
+/bootloader/
+
+# Build output
+/build/
+/firmware/
+
+# Python
+__pycache__/
+*.pyc
+
+# keymap-drawer intermediate
+/keymap-drawer/*.tmp.yaml
