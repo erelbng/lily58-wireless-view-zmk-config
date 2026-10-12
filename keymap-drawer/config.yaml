@@ -30,6 +30,8 @@ draw_config:
     text.label { fill: #3a352e; }
     text.trans { fill: #b3ac9d; }
     text.hold { fill: #7a7264; font-size: 9px; }
+    /* Rotated 1u thumbs are too narrow for 13px legends. */
+    .keypos-53 text, .keypos-54 text { font-size: 10px; }
     text.layer-label {
       fill: #3a352e;
       font-size: 20px;
@@ -41,8 +43,13 @@ parse_config:
   zmk_additional_includes: []
   raw_binding_map:
     "&studio_unlock": { t: "🔓", h: "studio" }
+    # Shifted layer names drawn at the cap edge overflow these rotated thumbs.
+    "&spc_lower": { t: "SPC Lower" }
+    "&spc_raise": { t: "SPC Raise" }
   # Show what the keys type under the German (de) OS layout.
   zmk_keycode_map:
+    SPACE: SPC
+    ENTER: RET
     Y: Z
     Z: Y
     COMMA: ","
