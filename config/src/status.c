@@ -18,6 +18,8 @@
  * SPDX-License-Identifier: MIT
  */
 
+#include <string.h>
+
 #include <zephyr/kernel.h>
 
 #include <zephyr/logging/log.h>
@@ -319,21 +321,25 @@ ZMK_DISPLAY_WIDGET_LISTENER(widget_layer_status, struct layer_status_state, laye
 ZMK_SUBSCRIPTION(widget_layer_status, zmk_layer_state_changed);
 
 int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
+    memset(widget->cbuf, 0, sizeof(widget->cbuf));
+    memset(widget->cbuf2, 0, sizeof(widget->cbuf2));
+    memset(widget->cbuf3, 0, sizeof(widget->cbuf3));
+
     widget->obj = lv_obj_create(parent);
     lv_obj_set_size(widget->obj, 128, 32);
     /* keep any uncovered area dark */
     lv_obj_set_style_bg_color(widget->obj, lv_color_black(), LV_PART_MAIN);
     lv_obj_set_style_bg_opa(widget->obj, LV_OPA_COVER, LV_PART_MAIN);
 
-    /* child 0, square A: viewer top = framebuffer right */
+    /* child 0, square A: viewer top = framebuffer right. size before align. */
     lv_obj_t *top = lv_canvas_create(widget->obj);
-    lv_obj_align(top, LV_ALIGN_TOP_RIGHT, 0, 0);
     lv_canvas_set_buffer(top, widget->cbuf, CANVAS_SIZE, CANVAS_SIZE, LV_IMG_CF_TRUE_COLOR);
+    lv_obj_align(top, LV_ALIGN_TOP_RIGHT, 0, 0);
 
     /* child 1, square B */
     lv_obj_t *middle = lv_canvas_create(widget->obj);
-    lv_obj_align(middle, LV_ALIGN_TOP_LEFT, 64, 0);
     lv_canvas_set_buffer(middle, widget->cbuf2, CANVAS_SIZE, CANVAS_SIZE, LV_IMG_CF_TRUE_COLOR);
+    lv_obj_align(middle, LV_ALIGN_TOP_LEFT, 64, 0);
 
     /* fire: viewer bottom = framebuffer left, frames are pre-rotated */
     widget->fire = lv_img_create(widget->obj);
@@ -342,9 +348,9 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
 
     /* mug square over the upper fire area, hidden until pause time */
     widget->mug = lv_canvas_create(widget->obj);
-    lv_obj_align(widget->mug, LV_ALIGN_TOP_LEFT, 32, 0);
     lv_canvas_set_buffer(widget->mug, widget->cbuf3, CANVAS_SIZE, CANVAS_SIZE,
                          LV_IMG_CF_TRUE_COLOR);
+    lv_obj_align(widget->mug, LV_ALIGN_TOP_LEFT, 32, 0);
     lv_obj_add_flag(widget->mug, LV_OBJ_FLAG_HIDDEN);
 
     sys_slist_append(&widgets, &widget->node);
